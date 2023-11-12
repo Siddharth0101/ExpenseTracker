@@ -1,37 +1,46 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const expensesList = document.getElementById("expenses-list");
-  const expenseInput = document.getElementById("expense-input");
-  const amountInput = document.getElementById("amount-input");
-  let expenses = JSON.parse(localStorage.getItem("expenses")) || [];
-  function renderExpenses() {
-    expensesList.innerHTML = "";
-    expenses.forEach((expense, index) => {
-      const expenseItem = document.createElement("div");
-      expenseItem.classList.add("expense-item");
-      expenseItem.innerHTML = `
-                <span>${expense.description}</span>
-                <span>$${expense.amount}</span>
-                <button onclick="deleteExpense(${index})">Delete</button>
-            `;
-      expensesList.appendChild(expenseItem);
-    });
-  }
-  function addExpense() {
-    const description = expenseInput.value;
-    const amount = parseFloat(amountInput.value);
-
-    if (description && !isNaN(amount)) {
-      expenses.push({ description, amount });
-      renderExpenses();
-      expenseInput.value = "";
-      amountInput.value = "";
-      localStorage.setItem("expenses", JSON.stringify(expenses));
-    }
-  }
-  function deleteExpense(index) {
-    expenses.splice(index, 1);
-    renderExpenses();
-    localStorage.setItem("expenses", JSON.stringify(expenses));
-  }
-  renderExpenses();
+function detail(event) {
+  event.preventDefault();
+  let price = document.querySelector("#number_").value;
+  let dish = document.querySelector("#text_").value;
+  let table = document.querySelector("#tableSelect").value;
+  let obj = {
+    Price: price,
+    Dish: dish,
+    Table: table,
+  };
+  axios.post(
+    "https://crudcrud.com/api/a70de86b007b44f598c4164f1645019e/DATA",
+    obj
+  );
+  showOnScreen(obj);
+}
+function showOnScreen(obj) {
+  let parent = document.querySelector("#itemList_");
+  let child = document.createElement("li");
+  let childText = document.createTextNode(
+    `${obj.Table} -${obj.Price} -${obj.Dish}`
+  );
+  let deleteBtn = document.createElement("button");
+  let deleteText = document.createTextNode("delete");
+  deleteBtn.onclick = () => {
+    parent.removeChild(child);
+    axios.delete(
+      `https://crudcrud.com/api/a70de86b007b44f598c4164f1645019e/DATA/${obj._id}`
+    );
+  };
+  deleteBtn.appendChild(deleteText);
+  child.appendChild(deleteBtn);
+  child.appendChild(childText);
+  parent.appendChild(child);
+}
+window.addEventListener("DOMContentLoaded", () => {
+  axios
+    .get("https://crudcrud.com/api/a70de86b007b44f598c4164f1645019e/DATA")
+    .then((res) => {
+      console.log(res);
+      for (let i = 0; i < res.data.length; i++) {
+        showOnScreen(res.data[i]);
+      }
+    })
+    .catch((err) => console.log(err));
 });

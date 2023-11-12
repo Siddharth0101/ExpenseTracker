@@ -3,23 +3,24 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
-    <title>Expense Tracker</title>
   </head>
   <body>
-    <div class="container">
-      <h1>Expense Tracker</h1>
-      <div class="form">
-        <input
-          type="text"
-          id="expense-input"
-          placeholder="Enter expense description"
-        />
-        <input type="number" id="amount-input" placeholder="Enter amount" />
-        <button onclick="addExpense()">Add Expense</button>
-      </div>
-      <div class="expenses-list" id="expenses-list"></div>
-    </div>
+    <form onsubmit="detail(event)">
+      <label>Choose Price</label>
+      <input type="number" id="number_" />
+      <label>Choose Dish</label>
+      <input type="text" id="text_" />
+      <label>Choose Table</label>
+      <select id="tableSelect">
+        <option>Table 1</option>
+        <option>Table 2</option>
+        <option>Table 3</option>
+      </select>
+      <button>Add to Bill</button>
+    </form>
+    <ul id="itemList_"></ul>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="/script.js"></script>
   </body>
 </html>
