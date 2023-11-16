@@ -5,22 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </head>
   <body>
-    <form onsubmit="detail(event)">
-      <label>Choose Price</label>
-      <input type="number" id="number_" />
-      <label>Choose Dish</label>
-      <input type="text" id="text_" />
-      <label>Choose Table</label>
-      <select id="tableSelect">
-        <option>Table 1</option>
-        <option>Table 2</option>
-        <option>Table 3</option>
-      </select>
-      <button>Add to Bill</button>
+    <form onsubmit="saveLocal(event)">
+      <label>Email</label>
+      <input type="email" id="email_" />
+      <label>Name</label>
+      <input type="text" id="name_" />
+      <label>Telephone</label>
+      <input type="tele" id="tele_" />
+      <button>submit</button>
     </form>
-    <ul id="itemList_"></ul>
-
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <ul id="table_"></ul>
     <script src="/script.js"></script>
   </body>
 </html>

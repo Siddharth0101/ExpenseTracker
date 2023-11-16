@@ -1,46 +1,42 @@
-function detail(event) {
+function saveLocal(event) {
   event.preventDefault();
-  let price = document.querySelector("#number_").value;
-  let dish = document.querySelector("#text_").value;
-  let table = document.querySelector("#tableSelect").value;
+  let email = document.querySelector("#email_").value;
+  let name = document.querySelector("#name_").value;
+  let tele = document.querySelector("#tele_").value;
   let obj = {
-    Price: price,
-    Dish: dish,
-    Table: table,
+    Email: email,
+    Name: name,
+    Tele: tele,
   };
-  axios.post(
-    "https://crudcrud.com/api/a70de86b007b44f598c4164f1645019e/DATA",
-    obj
-  );
+  localStorage.setItem(obj.Email, JSON.stringify(obj));
   showOnScreen(obj);
 }
+
 function showOnScreen(obj) {
-  let parent = document.querySelector("#itemList_");
+  let parent = document.querySelector("#table_");
   let child = document.createElement("li");
   let childText = document.createTextNode(
-    `${obj.Table} -${obj.Price} -${obj.Dish}`
+    `${obj.Email}-${obj.Name}-${obj.Tele}`
   );
-  let deleteBtn = document.createElement("button");
-  let deleteText = document.createTextNode("delete");
-  deleteBtn.onclick = () => {
+  let deletebtn = document.createElement("button");
+  let deletebtnText = document.createTextNode("delete");
+  deletebtn.onclick = () => {
+    localStorage.removeItem(obj.Email);
     parent.removeChild(child);
-    axios.delete(
-      `https://crudcrud.com/api/a70de86b007b44f598c4164f1645019e/DATA/${obj._id}`
-    );
   };
-  deleteBtn.appendChild(deleteText);
-  child.appendChild(deleteBtn);
+  deletebtn.appendChild(deletebtnText);
+  child.appendChild(deletebtn);
   child.appendChild(childText);
   parent.appendChild(child);
 }
+
 window.addEventListener("DOMContentLoaded", () => {
-  axios
-    .get("https://crudcrud.com/api/a70de86b007b44f598c4164f1645019e/DATA")
-    .then((res) => {
-      console.log(res);
-      for (let i = 0; i < res.data.length; i++) {
-        showOnScreen(res.data[i]);
-      }
-    })
-    .catch((err) => console.log(err));
+  let objKeys = Object.keys(localStorage);
+
+  for (let i = 0; i < objKeys.length; i++) {
+    let key = objKeys[i];
+    let userString = localStorage[key];
+    let userobj = JSON.parse(userString);
+    showOnScreen(userobj);
+  }
 });

@@ -1,0 +1,19 @@
+.row {
+  border: 2px solid red;
+}
+.box {
+  background-color: lightblue;
+  min-height: 40px;
+}
+.box1 {
+  background-color: blue;
+}
+.box2 {
+  background-color: orange;
+}
+.box3 {
+  background-color: yellow;
+}
+.box4 {
+  background-color: pink;
+}
